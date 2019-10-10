@@ -17,11 +17,15 @@ export class ClientListComponent implements OnInit {
                 private _route:ActivatedRoute ) { }
 
   ngOnInit() {
-debugger;
+
    this._clientService.getClients()
                       .subscribe( (clientList:Client[]) => {
                         this.clientList = clientList;
                       });
+  }
+
+  createClientIdUrl(id:number){
+    this._router.navigate(['/clients/{id}/tasks']);
   }
 
 }

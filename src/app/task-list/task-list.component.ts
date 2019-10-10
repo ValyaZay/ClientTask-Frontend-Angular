@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { ClientService } from '../client.service';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-task-list',
@@ -6,10 +9,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
+  
 
-  constructor() { }
+  constructor(private clientService:ClientService,
+              private activatedRoute:ActivatedRoute,
+              private router:Router) { }
 
+  clientId:number;
+  
+  
   ngOnInit() {
+    this.clientId = this.activatedRoute.snapshot.params['id'];
+        debugger;
+        console.log(this.clientId);
   }
 
+   
 }

@@ -1,0 +1,5 @@
+<form #form="ngForm">
+    <div class="form-group">
+        <input name="taskName" #taskName="ngModel" [(ngModel)]="clientService.formData.taskName" class="form-control" placeholder="Task Name">
+    </div>
+</form>

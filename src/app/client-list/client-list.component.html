@@ -12,7 +12,7 @@
     <tbody>
         <tr *ngFor="let client of clientList; index as i">
             <th scope="row">{{i+1}}</th>
-            <td>{{client.firstName}}</td>
+            <a [routerLink]="['/clients', client.id, 'tasks']"><td>{{client.firstName}}</td></a>
             <td>{{client.lastName}}</td>
             <td>{{client.address}}</td>
             <td>{{client.phoneNumber}}</td>
