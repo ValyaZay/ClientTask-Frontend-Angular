@@ -9,14 +9,21 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TaskFormCreateComponent implements OnInit {
   clientId:string;
+  clientName:string = "xcxcx";
 
   constructor(private clientService:ClientService,
-              private activatedRoute:ActivatedRoute) { }
+              private activatedRoute:ActivatedRoute) { 
+
+              }
 
   ngOnInit() {
-    this.clientId = this.activatedRoute.snapshot.params['id'];
-    debugger;
-    console.log(this.clientId);
+
+    this.activatedRoute.queryParams.subscribe(p => {
+      debugger;
+      this.clientName = p.client});
+
+
+    
   }
 
 }

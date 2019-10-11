@@ -37,11 +37,13 @@ public errorMessage:string;
                                                             debugger;
                                                             this.taskListCount = taskList.length;
                                                             console.log(this.taskListCount);
-                                                            });
-                                      this.clientService.getClientById(this.clientId)
+                                                            debugger;
+                                                            this.clientService.getClientById(this.clientId)
                                                       .subscribe((client:Client) => {
                                                             this.clientName = client.firstName;
                                                       })
+                                                            });
+                                      
                                     }
 
       });

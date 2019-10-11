@@ -8,3 +8,8 @@
 
 }
 
+a {
+    cursor: pointer;
+    display: block;
+    color:black;
+}

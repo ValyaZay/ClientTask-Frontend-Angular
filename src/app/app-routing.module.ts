@@ -6,7 +6,7 @@ import { TaskListComponent } from './task-list/task-list.component';
 
 
 const routes: Routes = [
-  { path: 'clients/:id/tasks/create-task', component:TaskFormCreateComponent },
+  { path: 'clients/:id/create-task', component:TaskFormCreateComponent },
   { path: 'clients/:id/tasks', component:TaskListComponent }
 ];
 
