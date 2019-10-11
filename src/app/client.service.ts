@@ -18,4 +18,12 @@ export class ClientService {
   getClients() : Observable<any> {
     return this.http.get(this.base + "/clients");
   }
+
+  getTasksByClientId(id:string) : Observable<any>{
+    return this.http.get(this.base + "/clients/" + id + "/tasks")
+  }
+
+  getClientById(id:string) : Observable<any>{
+    return this.http.get(this.base + "/clients/" + id)
+  }
 }

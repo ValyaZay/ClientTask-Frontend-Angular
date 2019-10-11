@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from '../client.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { $ } from 'protractor';
 
 
 @Component({
@@ -11,6 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ClientListComponent implements OnInit {
 
   public clientList:Client[] = [];
+  
 
   constructor( private _clientService:ClientService,
                 private _router:Router,
@@ -21,11 +23,14 @@ export class ClientListComponent implements OnInit {
    this._clientService.getClients()
                       .subscribe( (clientList:Client[]) => {
                         this.clientList = clientList;
+                        
                       });
+    
+      
   }
 
   createClientIdUrl(id:number){
-    this._router.navigate(['/clients/{id}/tasks']);
+    
   }
 
 }

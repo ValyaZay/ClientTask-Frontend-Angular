@@ -1,3 +1,56 @@
-<p>task-list works!</p>
+<div class="border pr-2 pl-2">
+<h4 class="mt-3">{{clientName}}'s Task List</h4> 
+<div class="text-right mb-3 mr-3">
+        <a [routerLink]="['create-task']" class="btn btn-primary ">Add New Task</a>
+    </div>
 
-<button [routerLink]="['create-task']">Add New Task</button>
+
+    
+<ng-template #elseBlock>
+<table class="table table-hover table-condensed " >
+    <thead>
+        <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Client Address</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                <th colspan="2" >Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+            <tr *ngFor="let task of taskList; index as i">
+                <th scope="row">{{i+1}}</th>
+                <td>{{task.taskName}}</td>
+                <td>{{task.description}}</td>
+                <td>{{task.clientAddress}}</td>
+                <td>{{task.startTime}}</td>
+                <td>{{task.endTime}}</td>
+                <div>
+                <td>
+                    
+                    <button class="btn btn-sm" [routerLink]="['/task', task.Id, 'edit']">
+                        edit
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-sm" [routerLink]="['/task', task.Id, 'delete']">
+                        del
+                    </button>
+                </td>
+                </div>
+            </tr>
+        
+    </tbody>
+</table>
+</ng-template>
+
+<div *ngIf="taskListCount == 0; else elseBlock">
+    <div>No Tasks</div>
+</div>
+</div>
+
+
+
