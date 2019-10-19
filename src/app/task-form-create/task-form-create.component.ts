@@ -11,8 +11,8 @@ import { NgForm } from '@angular/forms';
 export class TaskFormCreateComponent implements OnInit {
   clientId:number;
   clientName:string = "";
-  dateTime: Date;
   currentUrl:string;
+  taskId:number;
 
   constructor(private clientService:ClientService,
               private activatedRoute:ActivatedRoute,
@@ -29,10 +29,18 @@ export class TaskFormCreateComponent implements OnInit {
 
      this.activatedRoute.params.subscribe(p => {
       debugger; 
-      this.clientId = p['id']
+      this.clientId = p['id'],
+      this.taskId = p['taskId']
     });
-     
-      this.resetForm();
+     if(this.taskId == null){
+       debugger;
+       this.resetForm();
+     }
+     else{
+       debugger;
+       this.populateForm();
+     }
+      
       
   }
 
@@ -54,7 +62,7 @@ export class TaskFormCreateComponent implements OnInit {
   formData:Task;
 
   onSubmit(form:NgForm){
-    debugger;
+    //debugger;
    
     this.formData = {
       id : form.value.id,
@@ -70,7 +78,18 @@ export class TaskFormCreateComponent implements OnInit {
       res => { this.resetForm(form)},
       err => {console.log(err) }
     )
+
+    this.router.navigateByUrl("/clients/" + this.clientId + "/tasks");
   }
 
- 
+  populateForm(){
+    debugger;
+     this.clientService.getTaskById(this.clientId, this.taskId).subscribe(
+      res => { 
+        this.clientService.formData.startTime = res.startTime;
+        this.clientService.formData.endTime = "2017-06-13T13:00";
+       }
+    )
+  }
 }
+

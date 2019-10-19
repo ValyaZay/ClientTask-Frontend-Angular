@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ClientService } from '../client.service';
 import { ActivatedRoute, Router, NavigationEnd, NavigationStart } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -9,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
-export class TaskListComponent implements OnInit, OnChanges {
+export class TaskListComponent implements OnInit {
   
 currentUrl:string;
 clientId:string;
@@ -60,15 +59,14 @@ public errorMessage:string;
 
   }
 
-  ngOnChanges(){
-
-    
-  }
-  
   ngOnInit() {
-   
-        
-        
+       
+  }
+
+  populateForm(task:Task){
+    debugger;
+    this.router.navigateByUrl('/clients/' + task.clientId + '/tasks/' + task.id + "/edit");
+
   }
 
    

@@ -39,4 +39,9 @@ export class ClientService {
     debugger;
     return this.http.post(this.base + "/clients/" + formData.clientId + "/tasks", formData)
   }
+
+  getTaskById(clientId:number, taskId:number) : Observable<any>{
+    debugger;
+    return this.http.get(this.base + "/clients/" + clientId + "/tasks/" + taskId)
+  }
 }

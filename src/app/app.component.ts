@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
       this._clientService.getClients()
                       .subscribe( (clientList:Client[]) => {
+                        debugger;
                           this.firstClientId = clientList[0].id;
                           this._router.navigate(['/clients', this.firstClientId, 'tasks']);
                       });
