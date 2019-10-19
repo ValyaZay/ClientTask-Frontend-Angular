@@ -11,7 +11,15 @@ import { Observable } from 'rxjs';
 export class ClientService {
 
   private base: string = "http://localhost:11435/api/v1";
-  formData:Task;
+  formData:Task = {
+    id: 0,
+    taskName:'',
+    description:'',
+    clientAddress:'',
+    startTime:'',
+    endTime:'',
+    clientId:0
+  };
 
   constructor(private http: HttpClient) { }
 
@@ -25,5 +33,10 @@ export class ClientService {
 
   getClientById(id:string) : Observable<any>{
     return this.http.get(this.base + "/clients/" + id)
+  }
+
+  postTask(formData:Task){
+    debugger;
+    return this.http.post(this.base + "/clients/" + formData.clientId + "/tasks", formData)
   }
 }
