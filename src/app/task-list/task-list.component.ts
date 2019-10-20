@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ClientService } from '../client.service';
 import { ActivatedRoute, Router, NavigationEnd, NavigationStart } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -9,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
-export class TaskListComponent implements OnInit, OnChanges {
+export class TaskListComponent implements OnInit {
   
 currentUrl:string;
 clientId:string;
@@ -37,11 +36,13 @@ public errorMessage:string;
                                                             debugger;
                                                             this.taskListCount = taskList.length;
                                                             console.log(this.taskListCount);
-                                                            });
-                                      this.clientService.getClientById(this.clientId)
+                                                            debugger;
+                                                            this.clientService.getClientById(this.clientId)
                                                       .subscribe((client:Client) => {
                                                             this.clientName = client.firstName;
                                                       })
+                                                            });
+                                      
                                     }
 
       });
@@ -49,24 +50,56 @@ public errorMessage:string;
   }
 
   
+  // getClientIdFromUrl() : string {
+  //   let lastSlashIndex = this.currentUrl.lastIndexOf("/");
+  //   let preLastSlashIndex = this.currentUrl.substring(0, lastSlashIndex-1).lastIndexOf("/");
+  //   this.clientId = this.currentUrl.substring(preLastSlashIndex+1, lastSlashIndex);
+  //   //console.log(this.clientId);
+  //   return this.clientId;
+
+  // }
+
   getClientIdFromUrl() : string {
-    let lastSlashIndex = this.currentUrl.lastIndexOf("/");
-    let preLastSlashIndex = this.currentUrl.substring(0, lastSlashIndex-1).lastIndexOf("/");
-    this.clientId = this.currentUrl.substring(preLastSlashIndex+1, lastSlashIndex);
-    //console.log(this.clientId);
+    let firstSlashIndex = this.currentUrl.indexOf("/");
+    let clientSegment = this.currentUrl.substring(firstSlashIndex+1);
+
+    let secondSlashIndex = clientSegment.indexOf("/");
+    let idSegment = clientSegment.substring(secondSlashIndex + 1);
+
+    let thirdSlashIndex = idSegment.indexOf("/");
+    if(thirdSlashIndex == null){
+      this.clientId = idSegment;
+    }else{
+      this.clientId = idSegment.substring(0, thirdSlashIndex);
+    }
     return this.clientId;
 
   }
 
-  ngOnChanges(){
-
-    
-  }
-  
   ngOnInit() {
-   
-        
-        
+    this.clientId = this.getClientIdFromUrl();
+    this.clientService.getTasksByClientId(this.clientId).subscribe((taskList:Task[]) => {
+      this.taskList = taskList;
+      
+      this.clientService.getClientById(this.clientId).subscribe((client:Client) => {
+                                                      this.clientName = client.firstName;
+                                                      })
+      });
+  }
+
+  populateForm(task:Task){
+    debugger;
+    this.router.navigateByUrl('/clients/' + task.clientId + '/tasks/' + task.id + "/edit");
+
+  }
+
+  deleteTask(id:number, clientId:number){
+    if(confirm("Are you sure to delete this task?")){
+      this.clientService.deleteTask(id, clientId).subscribe(
+      res => { this.router.navigateByUrl("/clients/" + this.clientId + "/tasks"); }
+    )
+    }
+    
   }
 
    

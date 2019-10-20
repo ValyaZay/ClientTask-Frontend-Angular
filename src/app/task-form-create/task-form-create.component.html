@@ -1,7 +1,69 @@
-<h4>Create New Task</h4>
+<h4> {{ taskId == null ? headingCreate : headingUpdate }}</h4>
 
-<form #form="ngForm">
-    <div class="form-group">
-        <input name="taskName" #taskName="ngModel" [(ngModel)]="clientService.formData.taskName" class="form-control" placeholder="Task Name">
+
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+    <div class="row justify-content-md-center">
+    
+
+            <div class="col-md-8 ">
+                <input type="hidden" name="id" [value]="clientService.formData.id">
+                
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text bg-white">
+                                <i class="fas fa-tasks" [class.green-icon]="taskName.valid" [class.red-icon]="taskName.invalid && taskName.touched"></i> 
+                            </div>
+                        </div>
+                        <input name="taskName" #taskName="ngModel" [(ngModel)]="clientService.formData.taskName" class="form-control" placeholder="Task Name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text bg-white">
+                                        <i class="fas fa-info-circle" [class.green-icon]="description.valid" [class.red-icon]="description.invalid && description.touched"></i>
+                                </div>
+                            </div>
+                            <input name="description" #description="ngModel" [(ngModel)]="clientService.formData.description" class="form-control" placeholder="Description" required maxlength="100" minlength="10">
+                        </div>
+                </div>
+
+                <div class="form-group">
+                        <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text bg-white">
+                                            <i class="far fa-address-card" [class.green-icon]="clientAddress.valid" [class.red-icon]="clientAddress.invalid && clientAddress.touched"></i>
+                                    </div>
+                                </div>
+                            <input name="clientAddress" #clientAddress="ngModel" [(ngModel)]="clientService.formData.clientAddress" class="form-control" placeholder="Client Address" required>
+
+                        </div>
+
+                </div>
+
+                <div class="form-group">
+                   <div class="input-group">
+                       
+                               <label for="start" class="mr-4 mt-1">Start Time:</label>
+                               
+                               <input id="start" type="datetime-local" name="startTime" #startTime="ngModel" [(ngModel)]="clientService.formData.startTime" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="input-group">
+                                
+                                <label for="end" class="mr-4 mt-1">End Time:</label>
+                            
+                                <input id="end" type="datetime-local" name="endTime" #endTime="ngModel" [(ngModel)]="clientService.formData.endTime" class="form-control" required>
+                    </div>
+               </div>
+        
+            <div class="form-group">
+                <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="form.invalid">Submit</button>
+            </div>   
+        </div>
     </div>
 </form>

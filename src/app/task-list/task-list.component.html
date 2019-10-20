@@ -1,7 +1,7 @@
 <div class="border pr-2 pl-2">
 <h4 class="mt-3">{{clientName}}'s Task List</h4> 
 <div class="text-right mb-3 mr-3">
-        <a [routerLink]="['create-task']" class="btn btn-primary ">Add New Task</a>
+        <a [routerLink]="['/clients', clientId,'create-task']" [queryParams]="{client:clientName}" class="btn btn-primary ">Add New Task</a>
     </div>
 
 
@@ -23,6 +23,8 @@
         
             <tr *ngFor="let task of taskList; index as i">
                 <th scope="row">{{i+1}}</th>
+                <input type="hidden" name="id" [value]="task.id">
+                <input type="hidden" name="clientId" [value]="task.clientId">
                 <td>{{task.taskName}}</td>
                 <td>{{task.description}}</td>
                 <td>{{task.clientAddress}}</td>
@@ -31,13 +33,13 @@
                 <div>
                 <td>
                     
-                    <button class="btn btn-sm" [routerLink]="['/task', task.Id, 'edit']">
-                        edit
+                    <button class="btn btn-sm" (click)="populateForm(task)">
+                        <i class="fas fa-edit"></i>
                     </button>
                 </td>
                 <td>
-                    <button class="btn btn-sm" [routerLink]="['/task', task.Id, 'delete']">
-                        del
+                    <button class="btn btn-sm" (click)="deleteTask(task.id, task.clientId)">
+                        <i class="fas fa-trash-alt red-icon"></i>
                     </button>
                 </td>
                 </div>
