@@ -14,6 +14,9 @@ export class TaskFormCreateComponent implements OnInit {
   currentUrl:string;
   taskId:number;
 
+  headingCreate:string;
+  headingUpdate:string;
+
   constructor(private clientService:ClientService,
               private activatedRoute:ActivatedRoute,
               private router:Router) { 
@@ -26,8 +29,11 @@ export class TaskFormCreateComponent implements OnInit {
       debugger;
       this.clientName = p.client
     });
+    
+    this.headingCreate = "Create new Task for " + this.clientName;
+    this.headingUpdate = "Update Task";
 
-     this.activatedRoute.params.subscribe(p => {
+    this.activatedRoute.params.subscribe(p => {
       debugger; 
       this.clientId = p['id'],
       this.taskId = p['taskId']
@@ -62,10 +68,10 @@ export class TaskFormCreateComponent implements OnInit {
   formData:Task;
 
   onSubmit(form:NgForm){
-    //debugger;
+    debugger;
    
     this.formData = {
-      id : form.value.id,
+      id : this.taskId,
       description:form.value.description,
       clientAddress:form.value.clientAddress,
       taskName:form.value.taskName,
@@ -73,12 +79,20 @@ export class TaskFormCreateComponent implements OnInit {
       endTime:form.value.endTime,
       clientId: this.clientId
     }
-    this.clientService.postTask(this.formData).subscribe(
+
+    if(this.formData.id == 0){
+      this.clientService.postTask(this.formData).subscribe(
 
       res => { this.resetForm(form)},
       err => {console.log(err) }
     )
+    }else{
+      this.clientService.putTask(this.formData).subscribe(
 
+      res => { this.resetForm(form)},
+      err => {console.log(err) }
+    )}
+    
     this.router.navigateByUrl("/clients/" + this.clientId + "/tasks");
   }
 
@@ -86,9 +100,8 @@ export class TaskFormCreateComponent implements OnInit {
     debugger;
      this.clientService.getTaskById(this.clientId, this.taskId).subscribe(
       res => { 
-        this.clientService.formData.startTime = res.startTime;
-        this.clientService.formData.endTime = "2017-06-13T13:00";
-       }
+        this.clientService.formData = res;
+        }
     )
   }
 }

@@ -1,4 +1,4 @@
-<h4>Create New Task for {{clientName}}</h4>
+<h4> {{ taskId == null ? headingCreate : headingUpdate }}</h4>
 
 
 <form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">

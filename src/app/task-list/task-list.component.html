@@ -24,7 +24,7 @@
             <tr *ngFor="let task of taskList; index as i">
                 <th scope="row">{{i+1}}</th>
                 <input type="hidden" name="id" [value]="task.id">
-
+                <input type="hidden" name="clientId" [value]="task.clientId">
                 <td>{{task.taskName}}</td>
                 <td>{{task.description}}</td>
                 <td>{{task.clientAddress}}</td>
@@ -38,7 +38,7 @@
                     </button>
                 </td>
                 <td>
-                    <button class="btn btn-sm" [routerLink]="['/task', task.Id, 'delete']">
+                    <button class="btn btn-sm" (click)="deleteTask(task.id, task.clientId)">
                         <i class="fas fa-trash-alt red-icon"></i>
                     </button>
                 </td>
