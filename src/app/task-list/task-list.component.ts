@@ -40,7 +40,7 @@ public errorMessage:string;
                                                             this.clientService.getClientById(this.clientId)
                                                       .subscribe((client:Client) => {
                                                             this.clientName = client.firstName;
-                                                      })
+                                                      });
                                                             });
                                       
                                     }
@@ -78,13 +78,15 @@ public errorMessage:string;
 
   ngOnInit() {
     this.clientId = this.getClientIdFromUrl();
-    this.clientService.getTasksByClientId(this.clientId).subscribe((taskList:Task[]) => {
-      this.taskList = taskList;
+debugger;
+    this.clientService.getTasksByClientId(this.clientId).subscribe(t => {
+      this.taskList = t;
+    });
       
       this.clientService.getClientById(this.clientId).subscribe((client:Client) => {
                                                       this.clientName = client.firstName;
-                                                      })
-      });
+                                                      });
+      
   }
 
   populateForm(task:Task){

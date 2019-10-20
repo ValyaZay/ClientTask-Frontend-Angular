@@ -28,6 +28,7 @@ export class ClientService {
   }
 
   getTasksByClientId(id:string) : Observable<any>{
+    debugger;
     return this.http.get(this.base + "/clients/" + id + "/tasks")
   }
 

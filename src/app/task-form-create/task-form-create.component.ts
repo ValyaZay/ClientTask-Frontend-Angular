@@ -41,6 +41,7 @@ export class TaskFormCreateComponent implements OnInit {
      if(this.taskId == null){
        debugger;
        this.resetForm();
+       this.taskId = 0;
      }
      else{
        debugger;
@@ -80,20 +81,24 @@ export class TaskFormCreateComponent implements OnInit {
       clientId: this.clientId
     }
 
-    if(this.formData.id == 0){
+    if(this.taskId == 0){
+      debugger;
       this.clientService.postTask(this.formData).subscribe(
 
-      res => { this.resetForm(form)},
+      res => { this.router.navigateByUrl("/clients/" + this.clientId + "/tasks");},
       err => {console.log(err) }
-    )
+    );
+    
+
     }else{
       this.clientService.putTask(this.formData).subscribe(
 
-      res => { this.resetForm(form)},
+      res => { this.router.navigateByUrl("/clients/" + this.clientId + "/tasks"); },
       err => {console.log(err) }
-    )}
+    );
     
-    this.router.navigateByUrl("/clients/" + this.clientId + "/tasks");
+  }
+   
   }
 
   populateForm(){
